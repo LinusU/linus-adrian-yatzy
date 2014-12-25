@@ -1,3 +1,3 @@
 
-yatzy: main.c
-	gcc -o yatzy main.c
+yatzy: *.c
+	gcc -lcurses -o yatzy main.c

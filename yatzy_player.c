@@ -32,6 +32,9 @@ struct yatzy_player* yatzy_player_create(char *name) {
   struct yatzy_player *player;
 
   player = (struct yatzy_player*) malloc(sizeof(struct yatzy_player));
+
+  memset(player, 0, sizeof(struct yatzy_player));
+
   player->name = (char*) malloc(strlen(name) + 1);
 
   strcpy(player->name, name);
@@ -39,7 +42,7 @@ struct yatzy_player* yatzy_player_create(char *name) {
   return player;
 }
 
-int yatze_player_total_score(struct yatzy_player* player) {
+int yatzy_player_total_score(struct yatzy_player* player) {
 
   // FIXME
 
