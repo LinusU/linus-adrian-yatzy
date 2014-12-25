@@ -1,4 +1,6 @@
 
+#include <unistd.h>
+
 void yatzy_ui_ask_for_players(struct yatzy_game *game) {
 
   int i;
@@ -91,6 +93,23 @@ void yatzy_ui_print_first_letter_bold(WINDOW *win, int y, int x, const char *tex
   mvwprintw(win, y, x + 1, &(text[1]));
 }
 
+void yatzy_ui_animate_dice(WINDOW *win, bool enabled[]) {
+
+  int repeat = 60;
+
+  while (--repeat) {
+    for (int i=0; i<5; i++) {
+      if (enabled[i] == true) {
+        yatzy_ui_print_die(win, 3, 2 + i * 9, i + 1, rand_dice(), true);
+      }
+    }
+
+    wrefresh(win);
+    usleep(16666);
+  }
+
+}
+
 void yatzy_ui_play_hand(struct yatzy_game *game, struct yatzy_player *player) {
 
   int i;
@@ -113,6 +132,9 @@ void yatzy_ui_play_hand(struct yatzy_game *game, struct yatzy_player *player) {
   }
 
   int tries = 2;
+
+  bool firstAnimation[5] = {true, true, true, true, true};
+  yatzy_ui_animate_dice(win, firstAnimation);
 
   do {
 
@@ -139,16 +161,19 @@ void yatzy_ui_play_hand(struct yatzy_game *game, struct yatzy_player *player) {
     if (ch == 10) {
 
       bool modified = false;
+      bool animated[5] = {};
 
       for (i=0; i<5; i++) {
         if (hand->lock[i] == false) {
           modified = true;
+          animated[i] = true;
           hand->die[i] = rand_dice();
           hand->lock[i] = true;
         }
       }
 
       if (modified == true) {
+        yatzy_ui_animate_dice(win, animated);
         tries--;
       } else {
         tries = 0;
