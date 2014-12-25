@@ -1,41 +1,27 @@
-#include <stdlib.h>
-#include <stdio.h>
+#include <stdbool.h>
 
 int House_yatze(int array[]) {
 
-  int HoScTh, HoScPa = 0;
-  int misstag = 0;
+  int i, j;
+  int score = 0;
+  bool has2 = false, has3 = false;
 
-  for (int i=1; i<7; i++) {
-    int apa=0;
-    for (int j=0; j<5; j++) {
-      if (array[j]==i) {
-        apa++;
-        if (apa==3) {
-          HoScTh = i*3;
-          misstag = i;
-        }
-      }
+  for (i=1; i<7; i++) {
+    int count = 0;
+
+    for (j=0; j<5; j++) {
+      if (array[j] == i) { count++; }
+    }
+
+    if (count == 2) { has2 = true; }
+    if (count == 3) { has3 = true; }
+  }
+
+  if (has2 && has3) {
+    for (i=0; i<5; i++) {
+      score += array[i];
     }
   }
-  if (HoScTh == 0) {
-    return 0;
-  }
-  for (int k=1; k<7; k++) {
-    int apa2=0;
-    for (int l=0; l<5; l++) {
-      if (array[l]==k) {
-        apa2=apa2+1;
-        if (apa2==2) {
-          if (misstag!=k) {
-            HoScPa = 2*k;
-          }
-        }
-      }
-    }
-  }
-  if (HoScPa == 0) {
-    return 0;
-  }
-return (HoScTh + HoScPa);
+
+  return score;
 }
