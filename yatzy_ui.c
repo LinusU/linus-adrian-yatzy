@@ -105,7 +105,12 @@ void yatzy_ui_play_hand(struct yatzy_game *game, struct yatzy_player *player) {
   win = newwin(26, 47, 0, 0);
   wborder(win, 0, 0, 0, 0, 0, 0, 0, 0);
 
-  mvwprintw(win, 1, 2, "%s's hand", player->name);
+  int len = strlen(player->name);
+  if (player->name[len - 1] == 's') {
+    mvwprintw(win, 1, 2, "%s' hand", player->name);
+  } else {
+    mvwprintw(win, 1, 2, "%s's hand", player->name);
+  }
 
   int tries = 2;
 
