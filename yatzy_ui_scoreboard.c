@@ -64,7 +64,13 @@ void yatzy_ui_scoreboard_refresh(WINDOW *win, struct yatzy_game *game) {
 
     mvwvline(win, 1, offset, 0, 23);
 
-    mvwprintw(win,  1, offset + 1, "%s", shortName);
+    if (game->currentPlayer == i) {
+      wattron(win, A_UNDERLINE);
+      mvwprintw(win,  1, offset + 1, "%s", shortName);
+      wattroff(win, A_UNDERLINE);
+    } else {
+      mvwprintw(win,  1, offset + 1, "%s", shortName);
+    }
 
     yatzy_ui_scoreboard_print_score(win,  3, offset + 1, game->players[i]->ones);
     yatzy_ui_scoreboard_print_score(win,  4, offset + 1, game->players[i]->twos);
