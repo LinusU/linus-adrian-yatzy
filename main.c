@@ -10,6 +10,7 @@
 #include "yatzy_game.c"
 #include "yatzy_hand.c"
 #include "yatzy_ui.c"
+#include "yatzy_ui_splash.c"
 #include "yatzy_ui_scoreboard.c"
 
 int main(int argc, char *argv[]) {
@@ -18,6 +19,8 @@ int main(int argc, char *argv[]) {
 
   srand(time(NULL));
   initscr();
+
+  yatzy_ui_splash_show();
 
   WINDOW *scoreboard;
 
