@@ -27,8 +27,6 @@ struct yatzy_player {
 
 };
 
-#include "BonusYatzy.c"
-
 struct yatzy_player* yatzy_player_create(char *name) {
 
   struct yatzy_player *player;
@@ -45,7 +43,7 @@ struct yatzy_player* yatzy_player_create(char *name) {
   player->fives = -1;
   player->sixes = -1;
 
-  player->bonus = 0;
+  player->bonus = -1;
 
   player->pair1 = -1;
   player->pair2 = -1;
@@ -58,10 +56,6 @@ struct yatzy_player* yatzy_player_create(char *name) {
   player->yatzy = -1;
 
   return player;
-}
-
-void yatzy_player_update_bonus(struct yatzy_player *player) {
-  player->bonus = Bonus_yatzy(player);
 }
 
 int yatzy_player_upper_score(struct yatzy_player* player) {
@@ -82,8 +76,7 @@ int yatzy_player_total_score(struct yatzy_player* player) {
 
   int total = yatzy_player_upper_score(player);
 
-  total += player->bonus;
-
+  if (player->bonus > 0) { total += player->bonus; }
   if (player->pair1 > 0) { total += player->pair1; }
   if (player->pair2 > 0) { total += player->pair2; }
   if (player->kind3 > 0) { total += player->kind3; }
@@ -95,4 +88,25 @@ int yatzy_player_total_score(struct yatzy_player* player) {
   if (player->yatzy > 0) { total += player->yatzy; }
 
   return total;
+}
+
+void yatzy_player_update_bonus(struct yatzy_player *player) {
+
+  int upperScore = yatzy_player_upper_score(player);
+
+  if (upperScore >= 63) {
+    player->bonus = 50;
+    return ;
+  }
+
+  player->bonus = -1;
+
+  if (player->ones == -1) { return ; }
+  if (player->twos == -1) { return ; }
+  if (player->threes == -1) { return ; }
+  if (player->fours == -1) { return ; }
+  if (player->fives == -1) { return ; }
+  if (player->sixes == -1) { return ; }
+
+  player->bonus = 0;
 }

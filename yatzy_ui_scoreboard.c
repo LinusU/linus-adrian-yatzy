@@ -74,7 +74,7 @@ void yatzy_ui_scoreboard_refresh(WINDOW *win, struct yatzy_game *game) {
     yatzy_ui_scoreboard_print_score(win,  8, offset + 1, game->players[i]->sixes);
 
     mvwprintw(win, 10, offset + 1, "%3d", yatzy_player_upper_score(game->players[i]));
-    mvwprintw(win, 11, offset + 1, "%3d", game->players[i]->bonus);
+    yatzy_ui_scoreboard_print_score(win, 11, offset + 1, game->players[i]->bonus);
 
     yatzy_ui_scoreboard_print_score(win, 13, offset + 1, game->players[i]->pair1);
     yatzy_ui_scoreboard_print_score(win, 14, offset + 1, game->players[i]->pair2);
