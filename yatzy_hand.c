@@ -26,16 +26,6 @@ enum yatzy_combination {
   YATZY
 };
 
-#include "Chance_yatzy.c"
-#include "CheckForPair.c"
-#include "FourOfAKind.c"
-#include "House_yatzy.c"
-#include "PlainNumbers_yatzy.c"
-#include "Straight_yatzy.c"
-#include "ThreeOfAKind.c"
-#include "TwoPairs_yatzy.c"
-#include "YatzyScore.c"
-
 int rand_dice() {
   return 1 + (rand() % 6);
 }
@@ -64,39 +54,27 @@ struct yatzy_hand* yatzy_hand_create() {
 
 int yatzy_hand_combination_score(struct yatzy_hand *hand, enum yatzy_combination combination) {
 
-  if (combination >= ONES && combination <= SIXES) {
-    return PlainNumbers_yatzy(hand->die, combination);
-  }
-  if (combination == BONUS) {
-    return 0;
-  }
-  if (combination == PAIR1) {
-    return Pair_yatzy(hand->die);
-  }
-  if (combination == PAIR2) {
-    return TwoPair_yatzy(hand->die);
-  }
-  if (combination == KIND3) {
-    return ThreeOfAKind_yatzy(hand->die);
-  }
-  if (combination == KIND4) {
-    return FourOfAKind_yatzy(hand->die);
-  }
-  if (combination == STRAIGHT1) {
-    return Straight_yatzy(hand->die, 15);
-  }
-  if (combination == STRAIGHT2) {
-    return Straight_yatzy(hand->die, 20);
-  }
-  if (combination == HOUSE) {
-    return House_yatze(hand->die);
-  }
-  if (combination == CHANCE) {
-    return Chance_yatzy(hand->die);
-  }
-  if (combination == YATZY) {
-    return Yatzy_yatzy(hand->die);
+  int i, count[6] = {};
+
+  for (i=0; i<5; i++) {
+    count[hand->die[i] - 1]++;
   }
 
-  return 0;
+  if (combination >= ONES && combination <= SIXES) {
+    return count[combination - ONES] * (combination - ONES + 1);
+  }
+
+  switch (combination) {
+    case PAIR1:      return yatzy_hand_score_pair1(hand->die, count);
+    case PAIR2:      return yatzy_hand_score_pair2(hand->die, count);
+    case KIND3:      return yatzy_hand_score_kind3(hand->die, count);
+    case KIND4:      return yatzy_hand_score_kind4(hand->die, count);
+    case STRAIGHT1:  return yatzy_hand_score_straight1(hand->die, count);
+    case STRAIGHT2:  return yatzy_hand_score_straight2(hand->die, count);
+    case HOUSE:      return yatzy_hand_score_house(hand->die, count);
+    case CHANCE:     return yatzy_hand_score_chance(hand->die, count);
+    case YATZY:      return yatzy_hand_score_yatzy(hand->die, count);
+    default:         return 0;
+  }
+
 }
