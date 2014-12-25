@@ -192,15 +192,15 @@ void yatzy_ui_play_hand(struct yatzy_game *game, struct yatzy_player *player) {
       case '4': combination = FOURS; break;
       case '5': combination = FIVES; break;
       case '6': combination = SIXES; break;
-      case 'Q': combination = PAIR1; break;
-      case 'W': combination = PAIR2; break;
-      case 'E': combination = KIND3; break;
-      case 'R': combination = KIND4; break;
-      case 'T': combination = STRAIGHT1; break;
-      case 'Y': combination = STRAIGHT2; break;
-      case 'U': combination = HOUSE; break;
-      case 'I': combination = CHANCE; break;
-      case 'O': combination = YATZY; break;
+      case 'Q': case 'q': combination = PAIR1; break;
+      case 'W': case 'w': combination = PAIR2; break;
+      case 'E': case 'e': combination = KIND3; break;
+      case 'R': case 'r': combination = KIND4; break;
+      case 'T': case 't': combination = STRAIGHT1; break;
+      case 'Y': case 'y': combination = STRAIGHT2; break;
+      case 'U': case 'u': combination = HOUSE; break;
+      case 'I': case 'i': combination = CHANCE; break;
+      case 'O': case 'o': combination = YATZY; break;
       default: again = true;
     }
 
