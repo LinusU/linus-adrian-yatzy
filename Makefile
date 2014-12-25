@@ -1,3 +1,3 @@
 
 yatzy: *.c
-	gcc -lcurses -o yatzy main.c
+	gcc -Wall -lncurses -o yatzy main.c

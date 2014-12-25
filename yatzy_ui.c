@@ -1,6 +1,4 @@
 
-#include <ncurses.h>
-
 void yatzy_ui_ask_for_players(struct yatzy_game *game) {
 
   int i;
@@ -54,30 +52,30 @@ void yatzy_ui_print_die(WINDOW *win, int y, int x, int accessor, int die, bool l
 
   switch (die) {
   case 1:
-    mvwprintw(win, y + 2, x + 2, " o ");
+    mvwaddwstr(win, y + 2, x + 2, L" \u25CF ");
     break;
   case 2:
-    mvwprintw(win, y + 1, x + 2, "  o");
-    mvwprintw(win, y + 3, x + 2, "o  ");
+    mvwaddwstr(win, y + 1, x + 2, L"  \u25CF");
+    mvwaddwstr(win, y + 3, x + 2, L"\u25CF  ");
     break;
   case 3:
-    mvwprintw(win, y + 1, x + 2, "  o");
-    mvwprintw(win, y + 2, x + 2, " o ");
-    mvwprintw(win, y + 3, x + 2, "o  ");
+    mvwaddwstr(win, y + 1, x + 2, L"  \u25CF");
+    mvwaddwstr(win, y + 2, x + 2, L" \u25CF ");
+    mvwaddwstr(win, y + 3, x + 2, L"\u25CF  ");
     break;
   case 4:
-    mvwprintw(win, y + 1, x + 2, "o o");
-    mvwprintw(win, y + 3, x + 2, "o o");
+    mvwaddwstr(win, y + 1, x + 2, L"\u25CF \u25CF");
+    mvwaddwstr(win, y + 3, x + 2, L"\u25CF \u25CF");
     break;
   case 5:
-    mvwprintw(win, y + 1, x + 2, "o o");
-    mvwprintw(win, y + 2, x + 2, " o ");
-    mvwprintw(win, y + 3, x + 2, "o o");
+    mvwaddwstr(win, y + 1, x + 2, L"\u25CF \u25CF");
+    mvwaddwstr(win, y + 2, x + 2, L" \u25CF ");
+    mvwaddwstr(win, y + 3, x + 2, L"\u25CF \u25CF");
     break;
   case 6:
-    mvwprintw(win, y + 1, x + 2, "o o");
-    mvwprintw(win, y + 2, x + 2, "o o");
-    mvwprintw(win, y + 3, x + 2, "o o");
+    mvwaddwstr(win, y + 1, x + 2, L"\u25CF \u25CF");
+    mvwaddwstr(win, y + 2, x + 2, L"\u25CF \u25CF");
+    mvwaddwstr(win, y + 3, x + 2, L"\u25CF \u25CF");
     break;
   }
 

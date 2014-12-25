@@ -1,7 +1,9 @@
 
 #include <stdlib.h>
+#include <locale.h>
 #include <time.h>
 
+#define _XOPEN_SOURCE_EXTENDED 1
 #include <ncurses.h>
 
 #include "yatzy_player.c"
@@ -11,6 +13,8 @@
 #include "yatzy_ui_scoreboard.c"
 
 int main(int argc, char *argv[]) {
+
+  setlocale(LC_CTYPE, "UTF-8");
 
   srand(time(NULL));
   initscr();
