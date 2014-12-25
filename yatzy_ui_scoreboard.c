@@ -1,11 +1,12 @@
 
 char STRIKE[] = {113, 113, 113, 0};
 
-WINDOW* yatzy_ui_scoreboard_create() {
+WINDOW* yatzy_ui_scoreboard_create(struct yatzy_game *game) {
 
   WINDOW *win;
+  int width = 19 + (game->totalPlayers * 4);
 
-  win = newwin(25, 43, 0, 48);
+  win = newwin(25, width, 0, 48);
   wborder(win, 0, 0, 0, 0, 0, 0, 0, 0);
 
   return win;

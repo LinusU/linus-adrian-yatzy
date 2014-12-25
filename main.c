@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
   // yatzy_game_add_player(game, yatzy_player_create("LU"));
   // yatzy_game_add_player(game, yatzy_player_create("AE"));
 
-  scoreboard = yatzy_ui_scoreboard_create();
+  scoreboard = yatzy_ui_scoreboard_create(game);
 
   for (int turn=0; turn<15; turn++) {
     for (game->currentPlayer = 0; game->currentPlayer < game->totalPlayers; game->currentPlayer++) {
