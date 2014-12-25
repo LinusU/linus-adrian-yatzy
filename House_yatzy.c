@@ -3,7 +3,7 @@
 
 int House_yatze(int array[]) {
 
-  int HouseScore = 0;
+  int HoScTh, HoScPa = 0;
   int misstag = 0;
 
   for (int i=1; i<7; i++) {
@@ -12,11 +12,14 @@ int House_yatze(int array[]) {
       if (array[j]==i) {
         apa++;
         if (apa==3) {
-          HouseScore = i*3;
+          HoScTh = i*3;
           misstag = i;
         }
       }
     }
+  }
+  if (HoScTh == 0) {
+    return 0;
   }
   for (int k=1; k<7; k++) {
     int apa2=0;
@@ -25,12 +28,14 @@ int House_yatze(int array[]) {
         apa2=apa2+1;
         if (apa2==2) {
           if (misstag!=k) {
-          HouseScore += 2*k;
+            HoScPa = 2*k;
           }
         }
       }
     }
   }
-return HouseScore;
-
+  if (HoScPa == 0) {
+    return 0;
+  }
+return (HoScTh + HoScPa);
 }
