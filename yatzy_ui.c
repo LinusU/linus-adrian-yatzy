@@ -83,6 +83,16 @@ void yatzy_ui_print_die(WINDOW *win, int y, int x, int accessor, int die, bool l
 
 }
 
+void yatzy_ui_print_first_letter_bold(WINDOW *win, int y, int x, const char *text) {
+  char first[2] = {text[0], 0};
+
+  wattron(win, A_BOLD);
+  mvwprintw(win, y, x, first);
+
+  wattroff(win, A_BOLD);
+  mvwprintw(win, y, x + 1, &(text[1]));
+}
+
 void yatzy_ui_play_hand(struct yatzy_game *game, struct yatzy_player *player) {
 
   int i;
@@ -150,22 +160,22 @@ void yatzy_ui_play_hand(struct yatzy_game *game, struct yatzy_player *player) {
     mvwprintw(win, 9, 5 + i * 9, " ");
   }
 
-  mvwprintw(win,  9, 2, "1 - Ones");
-  mvwprintw(win, 10, 2, "2 - Twos");
-  mvwprintw(win, 11, 2, "3 - Threes");
-  mvwprintw(win, 12, 2, "4 - Fours");
-  mvwprintw(win, 13, 2, "5 - Fives");
-  mvwprintw(win, 14, 2, "6 - Sixes");
+  yatzy_ui_print_first_letter_bold(win,  9, 2, "1 - Ones");
+  yatzy_ui_print_first_letter_bold(win, 10, 2, "2 - Twos");
+  yatzy_ui_print_first_letter_bold(win, 11, 2, "3 - Threes");
+  yatzy_ui_print_first_letter_bold(win, 12, 2, "4 - Fours");
+  yatzy_ui_print_first_letter_bold(win, 13, 2, "5 - Fives");
+  yatzy_ui_print_first_letter_bold(win, 14, 2, "6 - Sixes");
 
-  mvwprintw(win, 16, 2, "Q - 1 Pair");
-  mvwprintw(win, 17, 2, "W - 2 Pairs");
-  mvwprintw(win, 18, 2, "E - 3 of a kind");
-  mvwprintw(win, 19, 2, "R - 4 of a kind");
-  mvwprintw(win, 20, 2, "T - Small straight");
-  mvwprintw(win, 21, 2, "Y - Large straight");
-  mvwprintw(win, 22, 2, "U - Full house");
-  mvwprintw(win, 23, 2, "I - Chance");
-  mvwprintw(win, 24, 2, "O - YATZY");
+  yatzy_ui_print_first_letter_bold(win, 16, 2, "Q - 1 Pair");
+  yatzy_ui_print_first_letter_bold(win, 17, 2, "W - 2 Pairs");
+  yatzy_ui_print_first_letter_bold(win, 18, 2, "E - 3 of a kind");
+  yatzy_ui_print_first_letter_bold(win, 19, 2, "R - 4 of a kind");
+  yatzy_ui_print_first_letter_bold(win, 20, 2, "T - Small straight");
+  yatzy_ui_print_first_letter_bold(win, 21, 2, "Y - Large straight");
+  yatzy_ui_print_first_letter_bold(win, 22, 2, "U - Full house");
+  yatzy_ui_print_first_letter_bold(win, 23, 2, "I - Chance");
+  yatzy_ui_print_first_letter_bold(win, 24, 2, "O - YATZY");
 
   bool again = false;
 
