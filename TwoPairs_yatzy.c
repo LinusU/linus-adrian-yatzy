@@ -2,7 +2,6 @@
 #include <stdio.h>
 
 int TwoPair_yatzy(int array[]) {
-  int TwoPairScore = 0;
   int TwoPairScore2 = 0;
   int TwoPairScore1 = 0;
   int apo = 0;

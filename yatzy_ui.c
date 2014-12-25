@@ -3,7 +3,7 @@ void yatzy_ui_ask_for_players(struct yatzy_game *game) {
 
   int i;
   WINDOW *win;
-  char names[6][20] = {0};
+  char names[6][20] = {};
 
   win = newwin(8, 30, 0, 0);
   wborder(win, 0, 0, 0, 0, 0, 0, 0, 0);
