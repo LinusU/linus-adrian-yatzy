@@ -4,7 +4,6 @@
 int Bonus_yatzy(struct yatzy_player *player) {
 
   int total = 0;
-  int bonus = 0;
 
   total += player->ones;
   total += player->twos;
@@ -13,10 +12,5 @@ int Bonus_yatzy(struct yatzy_player *player) {
   total += player->fives;
   total += player->sixes;
 
-  if (total>=63) {
-    bonus = 50;
-  }
-
-return bonus;
-
+  return (total >= 63 ? 50 : 0);
 }

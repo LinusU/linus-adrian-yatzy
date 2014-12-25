@@ -24,7 +24,6 @@ int TwoPair_yatzy(int array[]) {
     return 0;
   }
 
-  int TwoPairScore2;
   for (int k=1; k<apo; k++) {
     int apa2=0;
     for (int l=0; l<5; l++) {
@@ -41,5 +40,5 @@ int TwoPair_yatzy(int array[]) {
   }
 
 
-  return (TwoPairScore1 + TwoPairScore2;
+  return (TwoPairScore1 + TwoPairScore2);
 }

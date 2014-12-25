@@ -8,27 +8,36 @@
 #include "yatzy_game.c"
 #include "yatzy_hand.c"
 #include "yatzy_ui.c"
+#include "yatzy_ui_scoreboard.c"
 
 int main(int argc, char *argv[]) {
 
   srand(time(NULL));
   initscr();
 
+  WINDOW *scoreboard;
+
   struct yatzy_game *game;
   game = yatzy_game_create();
 
-  // yatzy_ui_ask_for_players(game);
-  yatzy_game_add_player(game, yatzy_player_create("LU"));
-  yatzy_game_add_player(game, yatzy_player_create("AE"));
+  yatzy_ui_ask_for_players(game);
+  // yatzy_game_add_player(game, yatzy_player_create("LU"));
+  // yatzy_game_add_player(game, yatzy_player_create("AE"));
 
+  scoreboard = yatzy_ui_scoreboard_create();
 
-  yatzy_ui_show_scoreboard(game);
+  for (int turn=0; turn<15; turn++) {
+    for (game->currentPlayer = 0; game->currentPlayer < game->totalPlayers; game->currentPlayer++) {
+      yatzy_ui_scoreboard_refresh(scoreboard, game);
+      yatzy_ui_play_hand(game, game->players[game->currentPlayer]);
+      yatzy_player_update_bonus(game->players[game->currentPlayer]);
+    }
+  }
 
-  yatzy_ui_play_hand(game, game->players[0]);
+  yatzy_ui_scoreboard_refresh(scoreboard, game);
+  refresh();
+  wgetch(scoreboard);
 
-
-  // refresh();
-  // getch();
   endwin();
 
   return 0;

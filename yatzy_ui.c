@@ -35,72 +35,6 @@ void yatzy_ui_ask_for_players(struct yatzy_game *game) {
   delwin(win);
 }
 
-void yatzy_ui_show_scoreboard(struct yatzy_game *game) {
-
-  WINDOW *win;
-
-  win = newwin(24, 32, 0, 0);
-  wborder(win, 0, 0, 0, 0, 0, 0, 0, 0);
-
-  mvwprintw(win,  1, 1, "Player");
-
-  mvwprintw(win,  3, 1, "Ones");
-  mvwprintw(win,  4, 1, "Twos");
-  mvwprintw(win,  5, 1, "Threes");
-  mvwprintw(win,  6, 1, "Fours");
-  mvwprintw(win,  7, 1, "Fives");
-  mvwprintw(win,  8, 1, "Sixes");
-
-  mvwprintw(win, 10, 1, "Bonus");
-
-  mvwprintw(win, 12, 1, "1 Pair");
-  mvwprintw(win, 13, 1, "2 Pairs");
-  mvwprintw(win, 14, 1, "3 of a kind");
-  mvwprintw(win, 15, 1, "4 of a kind");
-  mvwprintw(win, 16, 1, "Small straight");
-  mvwprintw(win, 17, 1, "Large straight");
-  mvwprintw(win, 18, 1, "Full house");
-  mvwprintw(win, 19, 1, "Chance");
-  mvwprintw(win, 20, 1, "YATZY");
-
-  mvwprintw(win, 22, 1, "Total");
-
-  int i;
-
-  for (i=0; i<game->totalPlayers; i++) {
-
-    int offset = 20 + (i * 4);
-
-    mvwprintw(win,  1, offset + 1, "%s", game->players[i]->name);
-
-    mvwprintw(win,  3, offset + 1, "%2d", game->players[i]->ones);
-    mvwprintw(win,  4, offset + 1, "%2d", game->players[i]->twos);
-    mvwprintw(win,  5, offset + 1, "%2d", game->players[i]->threes);
-    mvwprintw(win,  6, offset + 1, "%2d", game->players[i]->fours);
-    mvwprintw(win,  7, offset + 1, "%2d", game->players[i]->fives);
-    mvwprintw(win,  8, offset + 1, "%2d", game->players[i]->sixes);
-
-    mvwprintw(win, 10, offset + 1, "%2d", game->players[i]->bonus);
-
-    mvwprintw(win, 12, offset + 1, "%2d", game->players[i]->pair1);
-    mvwprintw(win, 13, offset + 1, "%2d", game->players[i]->pair2);
-    mvwprintw(win, 14, offset + 1, "%2d", game->players[i]->kind3);
-    mvwprintw(win, 15, offset + 1, "%2d", game->players[i]->kind4);
-    mvwprintw(win, 16, offset + 1, "%2d", game->players[i]->straight1);
-    mvwprintw(win, 17, offset + 1, "%2d", game->players[i]->straight2);
-    mvwprintw(win, 18, offset + 1, "%2d", game->players[i]->house);
-    mvwprintw(win, 19, offset + 1, "%2d", game->players[i]->chance);
-    mvwprintw(win, 20, offset + 1, "%2d", game->players[i]->yatzy);
-
-    mvwprintw(win, 22, offset + 1, "%2d", yatzy_player_total_score(game->players[i]));
-
-  }
-
-  wrefresh(win);
-  wgetch(win);
-  delwin(win);
-}
-
 void yatzy_ui_print_die(WINDOW *win, int y, int x, int die, bool lock) {
 
   mvwprintw(win, y + 0, x, "+-----+");
@@ -115,28 +49,28 @@ void yatzy_ui_print_die(WINDOW *win, int y, int x, int die, bool lock) {
   }
 
   switch (die) {
-  case 0:
-    mvwprintw(win, y + 2, x + 2, " o ");
-    break;
   case 1:
-    mvwprintw(win, y + 1, x + 2, "  o");
-    mvwprintw(win, y + 3, x + 2, "o  ");
+    mvwprintw(win, y + 2, x + 2, " o ");
     break;
   case 2:
     mvwprintw(win, y + 1, x + 2, "  o");
-    mvwprintw(win, y + 2, x + 2, " o ");
     mvwprintw(win, y + 3, x + 2, "o  ");
     break;
   case 3:
+    mvwprintw(win, y + 1, x + 2, "  o");
+    mvwprintw(win, y + 2, x + 2, " o ");
+    mvwprintw(win, y + 3, x + 2, "o  ");
+    break;
+  case 4:
     mvwprintw(win, y + 1, x + 2, "o o");
     mvwprintw(win, y + 3, x + 2, "o o");
     break;
-  case 4:
+  case 5:
     mvwprintw(win, y + 1, x + 2, "o o");
     mvwprintw(win, y + 2, x + 2, " o ");
     mvwprintw(win, y + 3, x + 2, "o o");
     break;
-  case 5:
+  case 6:
     mvwprintw(win, y + 1, x + 2, "o o");
     mvwprintw(win, y + 2, x + 2, "o o");
     mvwprintw(win, y + 3, x + 2, "o o");
@@ -223,7 +157,83 @@ void yatzy_ui_play_hand(struct yatzy_game *game, struct yatzy_player *player) {
   mvwprintw(win, 23, 2, "I - Chance");
   mvwprintw(win, 24, 2, "O - YATZY");
 
-  wgetch(win);
+  bool again = false;
+
+  do {
+    int ch = wgetch(win);
+    enum yatzy_combination combination;
+
+    again = false;
+
+    switch (ch) {
+      case '1': combination = ONES; break;
+      case '2': combination = TWOS; break;
+      case '3': combination = THREES; break;
+      case '4': combination = FOURS; break;
+      case '5': combination = FIVES; break;
+      case '6': combination = SIXES; break;
+      case 'Q': combination = PAIR1; break;
+      case 'W': combination = PAIR2; break;
+      case 'E': combination = KIND3; break;
+      case 'R': combination = KIND4; break;
+      case 'T': combination = STRAIGHT1; break;
+      case 'Y': combination = STRAIGHT2; break;
+      case 'U': combination = HOUSE; break;
+      case 'I': combination = CHANCE; break;
+      case 'O': combination = YATZY; break;
+      default: again = true;
+    }
+
+    if (again == true) {
+      continue;
+    }
+
+    int currentScore;
+
+    switch (ch) {
+      case '1': currentScore = player->ones; break;
+      case '2': currentScore = player->twos; break;
+      case '3': currentScore = player->threes; break;
+      case '4': currentScore = player->fours; break;
+      case '5': currentScore = player->fives; break;
+      case '6': currentScore = player->sixes; break;
+      case 'Q': case 'q': currentScore = player->pair1; break;
+      case 'W': case 'w': currentScore = player->pair2; break;
+      case 'E': case 'e': currentScore = player->kind3; break;
+      case 'R': case 'r': currentScore = player->kind4; break;
+      case 'T': case 't': currentScore = player->straight1; break;
+      case 'Y': case 'y': currentScore = player->straight2; break;
+      case 'U': case 'u': currentScore = player->house; break;
+      case 'I': case 'i': currentScore = player->chance; break;
+      case 'O': case 'o': currentScore = player->yatzy; break;
+    }
+
+    if (currentScore != -1) {
+      again = true;
+      continue;
+    }
+
+    int score = yatzy_hand_combination_score(hand, combination);
+
+    switch (ch) {
+      case '1': player->ones = score; break;
+      case '2': player->twos = score; break;
+      case '3': player->threes = score; break;
+      case '4': player->fours = score; break;
+      case '5': player->fives = score; break;
+      case '6': player->sixes = score; break;
+      case 'Q': case 'q': player->pair1 = score; break;
+      case 'W': case 'w': player->pair2 = score; break;
+      case 'E': case 'e': player->kind3 = score; break;
+      case 'R': case 'r': player->kind4 = score; break;
+      case 'T': case 't': player->straight1 = score; break;
+      case 'Y': case 'y': player->straight2 = score; break;
+      case 'U': case 'u': player->house = score; break;
+      case 'I': case 'i': player->chance = score; break;
+      case 'O': case 'o': player->yatzy = score; break;
+    }
+
+  } while (again);
 
   echo();
   curs_set(1);

@@ -1,36 +1,25 @@
 
-int CheckNumberOfDices_yatzy(int array[]) {
-  int NumberOfDice[6]={0};
+int PlainNumbers_yatzy(int array[], enum yatzy_combination combination) {
 
-  for (int i=1; i<7, i++) {
-    for (int j=0; j<5; j++) {
-      if (array[j]==i) {
-        NumberOfDice[i-1]=NumberOfDice[i-1]+1;
-      }
+  int target, result, i;
+
+  switch (combination) {
+    case ONES: target = 1; break;
+    case TWOS: target = 2; break;
+    case THREES: target = 3; break;
+    case FOURS: target = 4; break;
+    case FIVES: target = 5; break;
+    case SIXES: target = 6; break;
+    default: target = 0;
+  }
+
+  result = 0;
+
+  for (i=0; i<5; i++) {
+    if (array[i] == target) {
+      result += target;
     }
   }
-  return NumberOfDice;
-}
 
-int PlainNumbers_yatzy(int array[], enum yatzy_combination combination) {
-  int Combo[] = CheckNumberOfDices_yatzy(array[]);
-
-  if (combination == ONES) {
-    return (Combo[0]);
-  }
-  if (combination == TWOS) {
-    return (Combo[1]*2);
-  }
-  if (combination == THREES) {
-    return (Combo[2]*3);
-  }
-  if (combination == FOURS) {
-    return (Combo[3]*4);
-  }
-  if (combination == FIVES) {
-    return (Combo[4]*5);
-  }
-  if (combination == SIXES) {
-    return (Combo[5]*6);
-  }
+  return result;
 }

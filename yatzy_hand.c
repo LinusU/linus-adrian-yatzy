@@ -2,17 +2,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "Chance_yatzy.c"
-#include "CheckForPair.c"
-#include "FourOfAKind.c"
-#include "House_yatzy.c"
-#include "PlainNumbers_yatzy.c"
-#include "Straight_yatzy.c"
-#include "ThreeOfAKind.c"
-#include "TwoPairs_yatzy.c"
-#include "YatzyScore.c"
-
-
 struct yatzy_hand {
   int die[5];
   bool lock[5];
@@ -37,8 +26,18 @@ enum yatzy_combination {
   YATZY
 };
 
+#include "Chance_yatzy.c"
+#include "CheckForPair.c"
+#include "FourOfAKind.c"
+#include "House_yatzy.c"
+#include "PlainNumbers_yatzy.c"
+#include "Straight_yatzy.c"
+#include "ThreeOfAKind.c"
+#include "TwoPairs_yatzy.c"
+#include "YatzyScore.c"
+
 int rand_dice() {
-  return rand() % 6;
+  return 1 + (rand() % 6);
 }
 
 struct yatzy_hand* yatzy_hand_create() {
@@ -83,8 +82,11 @@ int yatzy_hand_combination_score(struct yatzy_hand *hand, enum yatzy_combination
   if (combination == KIND4) {
     return FourOfAKind_yatzy(hand->die);
   }
-  if (combination == STRAIGHT1 && combination == STRAIGHT2) {
-    return Straight_yatzy(hand->die);
+  if (combination == STRAIGHT1) {
+    return Straight_yatzy(hand->die, 15);
+  }
+  if (combination == STRAIGHT2) {
+    return Straight_yatzy(hand->die, 20);
   }
   if (combination == HOUSE) {
     return House_yatze(hand->die);
