@@ -56,11 +56,15 @@ void yatzy_ui_scoreboard_refresh(WINDOW *win, struct yatzy_game *game) {
 
   for (i=0; i<game->totalPlayers; i++) {
 
+    char shortName[4];
     int offset = 18 + (i * 4);
+
+    memset(shortName + 3, 0, 1);
+    memcpy(shortName + 0, game->players[i]->name, 3);
 
     mvwvline(win, 1, offset, 0, 23);
 
-    mvwprintw(win,  1, offset + 1, "%s", game->players[i]->name);
+    mvwprintw(win,  1, offset + 1, "%s", shortName);
 
     yatzy_ui_scoreboard_print_score(win,  3, offset + 1, game->players[i]->ones);
     yatzy_ui_scoreboard_print_score(win,  4, offset + 1, game->players[i]->twos);
