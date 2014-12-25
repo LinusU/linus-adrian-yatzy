@@ -35,13 +35,17 @@ void yatzy_ui_ask_for_players(struct yatzy_game *game) {
   delwin(win);
 }
 
-void yatzy_ui_print_die(WINDOW *win, int y, int x, int die, bool lock) {
+void yatzy_ui_print_die(WINDOW *win, int y, int x, int accessor, int die, bool lock) {
 
   mvwprintw(win, y + 0, x, "+-----+");
   mvwprintw(win, y + 1, x, "|     |");
   mvwprintw(win, y + 2, x, "|     |");
   mvwprintw(win, y + 3, x, "|     |");
   mvwprintw(win, y + 4, x, "+-----+");
+
+  wattron(win, A_BOLD);
+  mvwprintw(win, y + 6, x + 3, "%d", accessor);
+  wattroff(win, A_BOLD);
 
   if (lock == false) {
     mvwprintw(win, y + 2, x + 2, " ? ");
@@ -81,6 +85,7 @@ void yatzy_ui_print_die(WINDOW *win, int y, int x, int die, bool lock) {
 
 void yatzy_ui_play_hand(struct yatzy_game *game, struct yatzy_player *player) {
 
+  int i;
   WINDOW *win;
   struct yatzy_hand *hand;
 
@@ -98,10 +103,10 @@ void yatzy_ui_play_hand(struct yatzy_game *game, struct yatzy_player *player) {
 
   do {
 
-    int i, ch;
+    int ch;
 
     for (i=0; i<5; i++) {
-      yatzy_ui_print_die(win, 3, 2 + i * 9, hand->die[i], hand->lock[i]);
+      yatzy_ui_print_die(win, 3, 2 + i * 9, i + 1, hand->die[i], hand->lock[i]);
     }
 
     if (tries > 0) {
@@ -139,6 +144,11 @@ void yatzy_ui_play_hand(struct yatzy_game *game, struct yatzy_player *player) {
     }
 
   } while (true);
+
+  // Hide numbers under dice
+  for (i=0; i<5; i++) {
+    mvwprintw(win, 9, 5 + i * 9, " ");
+  }
 
   mvwprintw(win,  9, 2, "1 - Ones");
   mvwprintw(win, 10, 2, "2 - Twos");
