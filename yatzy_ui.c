@@ -160,22 +160,22 @@ void yatzy_ui_play_hand(struct yatzy_game *game, struct yatzy_player *player) {
     mvwprintw(win, 9, 5 + i * 9, " ");
   }
 
-  yatzy_ui_print_first_letter_bold(win,  9, 2, "1 - Ones");
-  yatzy_ui_print_first_letter_bold(win, 10, 2, "2 - Twos");
-  yatzy_ui_print_first_letter_bold(win, 11, 2, "3 - Threes");
-  yatzy_ui_print_first_letter_bold(win, 12, 2, "4 - Fours");
-  yatzy_ui_print_first_letter_bold(win, 13, 2, "5 - Fives");
-  yatzy_ui_print_first_letter_bold(win, 14, 2, "6 - Sixes");
+  if(player->ones == -1) { yatzy_ui_print_first_letter_bold(win,  9, 2, "1 - Ones"); }
+  if(player->twos == -1) { yatzy_ui_print_first_letter_bold(win, 10, 2, "2 - Twos"); }
+  if(player->threes == -1) { yatzy_ui_print_first_letter_bold(win, 11, 2, "3 - Threes"); }
+  if(player->fours == -1) { yatzy_ui_print_first_letter_bold(win, 12, 2, "4 - Fours"); }
+  if(player->fives == -1) { yatzy_ui_print_first_letter_bold(win, 13, 2, "5 - Fives"); }
+  if(player->sixes == -1) { yatzy_ui_print_first_letter_bold(win, 14, 2, "6 - Sixes"); }
 
-  yatzy_ui_print_first_letter_bold(win, 16, 2, "Q - 1 Pair");
-  yatzy_ui_print_first_letter_bold(win, 17, 2, "W - 2 Pairs");
-  yatzy_ui_print_first_letter_bold(win, 18, 2, "E - 3 of a kind");
-  yatzy_ui_print_first_letter_bold(win, 19, 2, "R - 4 of a kind");
-  yatzy_ui_print_first_letter_bold(win, 20, 2, "T - Small straight");
-  yatzy_ui_print_first_letter_bold(win, 21, 2, "Y - Large straight");
-  yatzy_ui_print_first_letter_bold(win, 22, 2, "U - Full house");
-  yatzy_ui_print_first_letter_bold(win, 23, 2, "I - Chance");
-  yatzy_ui_print_first_letter_bold(win, 24, 2, "O - YATZY");
+  if (player->pair1 == -1) { yatzy_ui_print_first_letter_bold(win, 16, 2, "Q - 1 Pair"); }
+  if (player->pair2 == -1) { yatzy_ui_print_first_letter_bold(win, 17, 2, "W - 2 Pairs"); }
+  if (player->kind3 == -1) { yatzy_ui_print_first_letter_bold(win, 18, 2, "E - 3 of a kind"); }
+  if (player->kind4 == -1) { yatzy_ui_print_first_letter_bold(win, 19, 2, "R - 4 of a kind"); }
+  if (player->straight1 == -1) { yatzy_ui_print_first_letter_bold(win, 20, 2, "T - Small straight"); }
+  if (player->straight2 == -1) { yatzy_ui_print_first_letter_bold(win, 21, 2, "Y - Large straight"); }
+  if (player->house == -1) { yatzy_ui_print_first_letter_bold(win, 22, 2, "U - Full house"); }
+  if (player->chance == -1) { yatzy_ui_print_first_letter_bold(win, 23, 2, "I - Chance"); }
+  if (player->yatzy == -1) { yatzy_ui_print_first_letter_bold(win, 24, 2, "O - YATZY"); }
 
   bool again = false;
 
