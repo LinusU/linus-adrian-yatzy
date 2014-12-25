@@ -44,7 +44,26 @@ struct yatzy_player* yatzy_player_create(char *name) {
 
 int yatzy_player_total_score(struct yatzy_player* player) {
 
-  // FIXME
+  int total = 0;
 
-  return 0;
+  total += player->ones;
+  total += player->twos;
+  total += player->threes;
+  total += player->fours;
+  total += player->fives;
+  total += player->sixes;
+
+  total += player->bonus;
+
+  total += player->pair1;
+  total += player->pair2;
+  total += player->kind3;
+  total += player->kind4;
+  total += player->straight1;
+  total += player->straight2;
+  total += player->house;
+  total += player->chance;
+  total += player->yatzy;
+
+  return total;
 }

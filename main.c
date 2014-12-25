@@ -17,27 +17,19 @@ int main(int argc, char *argv[]) {
   struct yatzy_game *game;
   game = yatzy_game_create();
 
-  yatzy_ui_ask_for_players(game);
+  // yatzy_ui_ask_for_players(game);
+  yatzy_game_add_player(game, yatzy_player_create("LU"));
+  yatzy_game_add_player(game, yatzy_player_create("AE"));
+
+
+  yatzy_ui_show_scoreboard(game);
+
+  yatzy_ui_play_hand(game, game->players[0]);
 
 
   // refresh();
   // getch();
   endwin();
-
-  //
-  // // struct yatzy_player *linus;
-  //
-  // // linus = yatzy_player_create("Linus");
-  //
-  // yatzy_game_ask_for_players(game);
-  //
-  // // printf("The first player is: %s", game->players[0]->name);
-  //
-  // yatzy_game_print_scorecard(game);
-  //
-  // struct yatzy_hand *hand;
-  //
-  // hand = yatzy_hand_run();
 
   return 0;
 }

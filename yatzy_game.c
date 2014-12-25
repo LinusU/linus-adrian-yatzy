@@ -35,40 +35,6 @@ void yatzy_game_add_player(struct yatzy_game *game, struct yatzy_player *player)
 
 }
 
-bool yatzy_game_ask_for_player(struct yatzy_game *game) {
-
-  int scanned;
-  char name[255];
-
-  printf("Player %d name: ", (game->totalPlayers + 1));
-  fgets(name, 255, stdin);
-
-  if (scanned <= 0) {
-    return false;
-  }
-
-  yatzy_game_add_player(game, yatzy_player_create(name));
-
-  return true;
-}
-
-void yatzy_game_ask_for_players(struct yatzy_game *game) {
-  debug("yatzy_game_ask_for_players");
-
-  bool running;
-
-  // do {
-  //   running = yatzy_game_ask_for_player(game);
-  // } while(running);
-
-  yatzy_game_ask_for_player(game);
-  yatzy_game_ask_for_player(game);
-
-  debug("done");
-  printf("\n");
-
-}
-
 void yatzy_game_print_scorecard(struct yatzy_game *game) {
 
   printf(
