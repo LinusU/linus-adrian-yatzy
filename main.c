@@ -35,7 +35,6 @@ int main(int argc, char *argv[]) {
   }
 
   yatzy_ui_scoreboard_refresh(scoreboard, game);
-  refresh();
   wgetch(scoreboard);
 
   endwin();
