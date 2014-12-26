@@ -12,6 +12,7 @@
 #include "yatzy_hand.c"
 #include "yatzy_ui.c"
 #include "yatzy_ui_splash.c"
+#include "yatzy_ui_endgame.c"
 #include "yatzy_ui_scoreboard.c"
 
 int main(int argc, char *argv[]) {
@@ -41,7 +42,7 @@ int main(int argc, char *argv[]) {
   }
 
   yatzy_ui_scoreboard_refresh(scoreboard, game);
-  wgetch(scoreboard);
+  yatzy_ui_endgame_show(game);
 
   endwin();
 

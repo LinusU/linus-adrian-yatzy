@@ -44,3 +44,6 @@ void yatzy_ui_splash_show() {
   curs_set(1);
   refresh();
 }
+
+#undef W
+#undef H
